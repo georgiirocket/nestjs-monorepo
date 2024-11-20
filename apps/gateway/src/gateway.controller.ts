@@ -1,12 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
-import { GatewayService } from './gateway.service';
+import { PrismaService } from '@app/libs/services/database/prisma.service';
 
-@Controller()
+@Controller('api')
 export class GatewayController {
-  constructor(private readonly gatewayService: GatewayService) {}
+  constructor(private prismaService: PrismaService) {}
 
-  @Get()
-  getHello(): string {
-    return this.gatewayService.getHello();
+  @Get('hello')
+  async getHello(): Promise<any> {
+    return this.prismaService.user.findMany({});
   }
 }

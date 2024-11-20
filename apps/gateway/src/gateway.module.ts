@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { GatewayController } from './gateway.controller';
-import { GatewayService } from './gateway.service';
 import { ConfigModule } from '@nestjs/config';
 import { ENV_FILE_PATH } from '@app/libs/constants';
 import * as Joi from 'joi';
+import { PrismaService } from '@app/libs/services/database/prisma.service';
 
 @Module({
   imports: [
@@ -16,6 +16,6 @@ import * as Joi from 'joi';
     }),
   ],
   controllers: [GatewayController],
-  providers: [GatewayService],
+  providers: [PrismaService],
 })
 export class GatewayModule {}
