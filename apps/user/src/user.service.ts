@@ -1,13 +1,13 @@
 import { PrismaService } from '@app/libs/modules/database/prisma.service';
-import { UserDto } from './dto/user.dto';
-import { CreateUserDto } from './dto/create.dto';
-import { UpdateUserDto } from './dto/update.dto';
-import { DeleteUserDto } from './dto/delete.dto';
+import { UserDto } from '@app/libs/dto/user/user.dto';
+import { CreateUserDto } from '@app/libs/dto/user/create.dto';
+import { UpdateUserDto } from '@app/libs/dto/user/update.dto';
+import { DeleteUserDto } from '@app/libs/dto/user/delete.dto';
 
 /**
- * Repository
+ * Service
  */
-export class UserRepository {
+export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
 
   /**
@@ -21,7 +21,7 @@ export class UserRepository {
    * Get entity
    * @param id
    */
-  async getView(id: number): Promise<UserDto> {
+  async getView(id: number): Promise<UserDto | null> {
     return this.prismaService.user.findUnique({ where: { id } });
   }
 

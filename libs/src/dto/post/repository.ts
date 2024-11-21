@@ -1,8 +1,8 @@
 import { PrismaService } from '@app/libs/modules/database/prisma.service';
-import { PostDto } from './dto/post.dto';
-import { CreatePostDto } from './dto/create.dto';
-import { UpdatePostDto } from './dto/update.dto';
-import { DeletePostDto } from './dto/delete.dto';
+import { PostDto } from './post.dto';
+import { CreatePostDto } from './create.dto';
+import { UpdatePostDto } from './update.dto';
+import { DeletePostDto } from './delete.dto';
 
 /**
  * Repository
@@ -21,7 +21,7 @@ export class PostRepository {
    * Get entity
    * @param id
    */
-  async getView(id: number): Promise<PostDto> {
+  async getView(id: number): Promise<PostDto | null> {
     return this.prismaService.post.findUnique({ where: { id } });
   }
 

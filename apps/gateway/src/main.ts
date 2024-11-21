@@ -3,7 +3,6 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { GatewayModule } from './gateway.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { RpcExceptionToHttpExceptionFilter } from '@app/libs/filters/rpc-exception-to-http.filter';
 
 /**
  * Getaway
@@ -20,12 +19,11 @@ async function bootstrap() {
     .build();
 
   app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalFilters(new RpcExceptionToHttpExceptionFilter());
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-documentation', app, document);
 
-  await app.listen(configService.get('GATEWAY_PORT'));
+  await app.listen(configService.get('GATEWAY_PORT') as string);
 }
 
 void bootstrap();

@@ -20,6 +20,6 @@ export class PostDto implements Post {
   @ApiProperty({ example: '2024-11-21T16:38:56Z' })
   updatedAt: Date;
 
-  @ApiProperty({ example: 1 })
-  authorId: number;
+  @ApiProperty({ example: 1, nullable: true })
+  authorId: number | null;
 }
