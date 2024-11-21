@@ -1,0 +1,42 @@
+services:
+  gateway:
+    build:
+      context: .
+      dockerfile: ./apps/gateway/Dockerfile
+      target: production
+    command: ["node", "dist/apps/gateway/main"]
+    profiles: ['prod']
+    restart: unless-stopped
+    env_file:
+      - ./.env.production
+    depends_on:
+      - postgresql-prod
+    ports:
+      - '3000:3000'
+
+  #Dev database
+  postgresql-dev:
+    image: 'bitnami/postgresql:latest'
+    profiles: ['dev']
+    ports:
+      - '5432:5432'
+    volumes:
+      - 'postgresql-dev:/bitnami/postgresql'
+    env_file:
+      - ./.env
+
+  #Prod database
+  postgresql-prod:
+    image: 'bitnami/postgresql:latest'
+    profiles: ['prod']
+    ports:
+      - ':5432'
+    volumes:
+      - 'postgresql-prod:/bitnami/postgresql'
+    env_file:
+      - ./.env
+
+
+volumes:
+  postgresql-dev:
+  postgresql-prod:

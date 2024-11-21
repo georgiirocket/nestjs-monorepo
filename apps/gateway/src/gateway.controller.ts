@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { PrismaService } from '@app/libs/services/database/prisma.service';
+import { PrismaService } from '@app/libs/modules/database/prisma.service';
 
 @Controller('api')
 export class GatewayController {
