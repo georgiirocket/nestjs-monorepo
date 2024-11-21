@@ -3,10 +3,12 @@ import { UserDto } from '@app/libs/dto/user/user.dto';
 import { CreateUserDto } from '@app/libs/dto/user/create.dto';
 import { UpdateUserDto } from '@app/libs/dto/user/update.dto';
 import { DeleteUserDto } from '@app/libs/dto/user/delete.dto';
+import { Injectable } from '@nestjs/common';
 
 /**
  * Service
  */
+@Injectable()
 export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
 

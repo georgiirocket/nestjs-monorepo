@@ -5,7 +5,7 @@ import { EntityDto } from '@app/libs/dto/entity.dto';
 import { CreateUserDto } from '@app/libs/dto/user/create.dto';
 import { UpdateUserDto } from '@app/libs/dto/user/update.dto';
 import { DeleteUserDto } from '@app/libs/dto/user/delete.dto';
-import { USER_PATTERN } from '@app/libs/constants/patterns/user';
+import { USER_PATTERNS } from '@app/libs/constants/patterns/user';
 import { UserService } from './user.service';
 
 /**
@@ -18,7 +18,7 @@ export class UserController {
   /**
    * Get users
    */
-  @MessagePattern(USER_PATTERN.GET_USERS)
+  @MessagePattern(USER_PATTERNS.GET_USERS)
   async getList(): Promise<UserDto[]> {
     return await this.userService.getList();
   }
@@ -26,7 +26,7 @@ export class UserController {
   /**
    * Get user by id
    */
-  @MessagePattern(USER_PATTERN.GET_USER)
+  @MessagePattern(USER_PATTERNS.GET_USER)
   async getView(data: EntityDto): Promise<UserDto> {
     const user = await this.userService.getView(data.entityId);
 
@@ -40,7 +40,7 @@ export class UserController {
   /**
    * Create users
    */
-  @MessagePattern(USER_PATTERN.CREATE_USER)
+  @MessagePattern(USER_PATTERNS.CREATE_USER)
   async createEntity(data: CreateUserDto): Promise<UserDto> {
     return this.userService.createEntity(data);
   }
@@ -49,7 +49,7 @@ export class UserController {
    * Update user
    * @param data
    */
-  @MessagePattern(USER_PATTERN.UPDATE_USER)
+  @MessagePattern(USER_PATTERNS.UPDATE_USER)
   async updateEntity(data: UpdateUserDto): Promise<UserDto> {
     return this.userService.updateEntity(data);
   }
@@ -58,7 +58,7 @@ export class UserController {
    * Delete user
    * @param data
    */
-  @MessagePattern(USER_PATTERN.DELETE_USER)
+  @MessagePattern(USER_PATTERNS.DELETE_USER)
   async deleteEntity(data: DeleteUserDto): Promise<UserDto> {
     return this.userService.deleteUser(data);
   }

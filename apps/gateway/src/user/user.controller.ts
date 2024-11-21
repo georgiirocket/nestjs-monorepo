@@ -15,7 +15,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { UserDto } from '@app/libs/dto/user/user.dto';
 import { catchError, firstValueFrom } from 'rxjs';
-import { USER_PATTERN } from '@app/libs/constants/patterns/user';
+import { USER_PATTERNS } from '@app/libs/constants/patterns/user';
 import { EntityDto } from '@app/libs/dto/entity.dto';
 import { CreateUserDto } from '@app/libs/dto/user/create.dto';
 import { UpdateUserDto } from '@app/libs/dto/user/update.dto';
@@ -34,7 +34,7 @@ export class UserController {
   @Get('list')
   async getList(): Promise<UserDto[]> {
     return await firstValueFrom(
-      this.userServices.send<UserDto[]>(USER_PATTERN.GET_USERS, {}).pipe(
+      this.userServices.send<UserDto[]>(USER_PATTERNS.GET_USERS, {}).pipe(
         catchError((error: Error) => {
           throw new InternalServerErrorException(error);
         }),
@@ -53,7 +53,7 @@ export class UserController {
         .send<
           UserDto,
           EntityDto
-        >(USER_PATTERN.GET_USER, { entityId: Number(id) })
+        >(USER_PATTERNS.GET_USER, { entityId: Number(id) })
         .pipe(
           catchError((error) => {
             throw new NotFoundException(error);
@@ -69,7 +69,7 @@ export class UserController {
   @Post('create')
   async createEntity(@Body() data: CreateUserDto): Promise<UserDto> {
     return await firstValueFrom(
-      this.userServices.send<UserDto>(USER_PATTERN.CREATE_USER, data).pipe(
+      this.userServices.send<UserDto>(USER_PATTERNS.CREATE_USER, data).pipe(
         catchError((error) => {
           throw new InternalServerErrorException(error);
         }),
@@ -84,7 +84,7 @@ export class UserController {
   @Patch('update')
   async updateEntity(@Body() data: UpdateUserDto): Promise<UserDto> {
     return await firstValueFrom(
-      this.userServices.send<UserDto>(USER_PATTERN.UPDATE_USER, data).pipe(
+      this.userServices.send<UserDto>(USER_PATTERNS.UPDATE_USER, data).pipe(
         catchError((error) => {
           throw new InternalServerErrorException(error);
         }),
@@ -99,7 +99,7 @@ export class UserController {
   @Delete('delete')
   async deleteEntity(@Body() data: DeleteUserDto): Promise<UserDto> {
     return await firstValueFrom(
-      this.userServices.send<UserDto>(USER_PATTERN.DELETE_USER, data).pipe(
+      this.userServices.send<UserDto>(USER_PATTERNS.DELETE_USER, data).pipe(
         catchError((error) => {
           throw new InternalServerErrorException(error);
         }),
