@@ -53,4 +53,12 @@ export class UserService {
   async deleteUser(data: DeleteUserDto): Promise<UserDto> {
     return this.prismaService.user.delete({ where: data });
   }
+
+  /**
+   * Check exist user
+   * @param userName
+   */
+  async checkExistUser(userName: string): Promise<UserDto | null> {
+    return this.prismaService.user.findUnique({ where: { name: userName } });
+  }
 }

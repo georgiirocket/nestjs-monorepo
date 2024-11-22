@@ -30,7 +30,7 @@ export class PostController {
         .send<UserDto, EntityDto>(USER_PATTERNS.GET_USER, { entityId: id })
         .pipe(
           catchError((error) => {
-            throw new Error(error.message);
+            throw new Error(error);
           }),
         ),
     );
