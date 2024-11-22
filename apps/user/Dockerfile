@@ -9,7 +9,7 @@ RUN npm install
 COPY . .
 
 RUN npx prisma generate
-RUN npm run build gateway
+RUN npm run build user
 
 FROM node:20.16.0 as production
 
@@ -26,4 +26,4 @@ COPY --from=development /app/dist ./dist
 COPY --from=development /app/prisma ./prisma
 
 RUN npx prisma generate
-CMD ["node", "dist/apps/gateway/main"]
+CMD ["node", "dist/apps/user/main"]
