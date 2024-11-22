@@ -66,8 +66,6 @@ services:
       - 'postgresql-prod:/bitnami/postgresql'
     env_file:
       - ./.env.production
-    ports:
-      - '5434:5432'
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U ${POSTGRESQL_USERNAME}" ]
       interval: 5s

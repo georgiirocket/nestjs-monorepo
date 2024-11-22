@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
+import { PostModule } from './post/post.module';
 import * as Joi from 'joi';
 
 @Module({
@@ -12,6 +13,7 @@ import * as Joi from 'joi';
       }),
     }),
     UserModule,
+    PostModule,
   ],
 })
 export class GatewayModule {}

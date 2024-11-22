@@ -10,32 +10,32 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { SERVICE_NAMES } from '@app/libs/constants/services';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { UserDto } from '@app/libs/dto/user/user.dto';
+import { PostDto } from '@app/libs/dto/post/post.dto';
 import { catchError, firstValueFrom } from 'rxjs';
-import { USER_PATTERNS } from '@app/libs/constants/patterns/user';
+import { POST_PATTERNS } from '@app/libs/constants/patterns/post';
 import { EntityDto } from '@app/libs/dto/entity.dto';
-import { CreateUserDto } from '@app/libs/dto/user/create.dto';
-import { UpdateUserDto } from '@app/libs/dto/user/update.dto';
-import { DeleteUserDto } from '@app/libs/dto/user/delete.dto';
+import { CreatePostDto } from '@app/libs/dto/post/create.dto';
+import { UpdatePostDto } from '@app/libs/dto/post/update.dto';
+import { DeletePostDto } from '@app/libs/dto/post/delete.dto';
 
-@ApiTags('Users')
-@Controller('users')
-export class UserController {
+@ApiTags('Posts')
+@Controller('posts')
+export class PostController {
   constructor(
-    @Inject(SERVICE_NAMES.USER) private readonly userService: ClientProxy,
+    @Inject(SERVICE_NAMES.POST) private readonly postService: ClientProxy,
   ) {}
 
   /**
    * Get list
    */
-  @ApiOkResponse({ type: [UserDto] })
+  @ApiOkResponse({ type: [PostDto] })
   @Get('list')
-  async getList(): Promise<UserDto[]> {
+  async getList(): Promise<PostDto[]> {
     return await firstValueFrom(
-      this.userService.send<UserDto[]>(USER_PATTERNS.GET_USERS, {}).pipe(
+      this.postService.send<PostDto[]>(POST_PATTERNS.GET_POSTS, {}).pipe(
         catchError((error: Error) => {
           throw new InternalServerErrorException(error);
         }),
@@ -46,15 +46,15 @@ export class UserController {
   /**
    * Get view
    */
-  @ApiOkResponse({ type: UserDto })
+  @ApiOkResponse({ type: PostDto })
   @Get('view/:id')
-  async getView(@Param() { id }: { id: string }): Promise<UserDto> {
+  async getView(@Param() { id }: { id: string }): Promise<PostDto> {
     return await firstValueFrom(
-      this.userService
+      this.postService
         .send<
-          UserDto,
+          PostDto,
           EntityDto
-        >(USER_PATTERNS.GET_USER, { entityId: Number(id) })
+        >(POST_PATTERNS.GET_POST, { entityId: Number(id) })
         .pipe(
           catchError((error) => {
             throw new NotFoundException(error);
@@ -66,11 +66,11 @@ export class UserController {
   /**
    * Create entity
    */
-  @ApiOkResponse({ type: UserDto })
+  @ApiOkResponse({ type: PostDto })
   @Post('create')
-  async createEntity(@Body() data: CreateUserDto): Promise<UserDto> {
+  async createEntity(@Body() data: CreatePostDto): Promise<PostDto> {
     return await firstValueFrom(
-      this.userService.send<UserDto>(USER_PATTERNS.CREATE_USER, data).pipe(
+      this.postService.send<PostDto>(POST_PATTERNS.CREATE_POST, data).pipe(
         catchError((error) => {
           throw new InternalServerErrorException(error);
         }),
@@ -81,11 +81,11 @@ export class UserController {
   /**
    * Update entity
    */
-  @ApiOkResponse({ type: UserDto })
+  @ApiOkResponse({ type: PostDto })
   @Patch('update')
-  async updateEntity(@Body() data: UpdateUserDto): Promise<UserDto> {
+  async updateEntity(@Body() data: UpdatePostDto): Promise<PostDto> {
     return await firstValueFrom(
-      this.userService.send<UserDto>(USER_PATTERNS.UPDATE_USER, data).pipe(
+      this.postService.send<PostDto>(POST_PATTERNS.UPDATE_POST, data).pipe(
         catchError((error) => {
           throw new InternalServerErrorException(error);
         }),
@@ -96,11 +96,11 @@ export class UserController {
   /**
    * Update entity
    */
-  @ApiOkResponse({ type: UserDto })
+  @ApiOkResponse({ type: PostDto })
   @Delete('delete')
-  async deleteEntity(@Body() data: DeleteUserDto): Promise<UserDto> {
+  async deleteEntity(@Body() data: DeletePostDto): Promise<PostDto> {
     return await firstValueFrom(
-      this.userService.send<UserDto>(USER_PATTERNS.DELETE_USER, data).pipe(
+      this.postService.send<PostDto>(POST_PATTERNS.DELETE_POST, data).pipe(
         catchError((error) => {
           throw new InternalServerErrorException(error);
         }),

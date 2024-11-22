@@ -1,4 +1,4 @@
-import { IsString, Min } from 'class-validator';
+import { IsString, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 /**
@@ -6,7 +6,7 @@ import { ApiProperty } from '@nestjs/swagger';
  */
 export class CreateUserDto {
   @IsString()
-  @Min(2)
+  @MinLength(2)
   @ApiProperty({ example: 'Piter', required: true })
   name: string;
 }
