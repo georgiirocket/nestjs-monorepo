@@ -1,85 +1,158 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+## Monorepo
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Implementation nestjs-monorepo (microservices)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This repository shows how you can organize the structure in monorepo.
 
-## Description
+Feel free to copy, add and use this
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Tools used
 
-## Project setup
+-  [Nest JS](https://nestjs.com/)
+-  [Prisma](https://www.prisma.io/)
+-  [Docker](https://www.docker.com/)
+
+## First start
+
+Before the start you need to install docker and run it.
+
+1.Clone repository
+
+2.Install dependencies
 
 ```bash
-$ npm install
+npm i
 ```
 
-## Compile and run the project
+3.Start dev database
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+docker-compose --profile dev up -d 
 ```
 
-## Run tests
+4.Migrate prisma schema
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run migrate-dev
 ```
 
-## Resources
+4.Start all apps
 
-Check out a few resources that may come in handy when working with NestJS:
+```bash
+npm run start:micro
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## Start prod
 
-## Support
+Before the start you need to install docker and run it.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
+```bash
+docker-compose --profile prod up -d 
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Documentation
 
-## License
+After the start applications:
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+-  [Swagger](http://localhost:3000/api-documentation)
+
+## Postman
+
+If you want to test endpoints. You can import this file in Postman
+
+- nestjs-monorepo.postman_collection.json
+
+## Structure
+
+```
+.
+├── Dockerfile
+├── README.md
+├── apps
+│   ├── gateway
+│   │   ├── Dockerfile
+│   │   ├── src
+│   │   │   ├── gateway.module.ts
+│   │   │   ├── main.ts
+│   │   │   ├── post
+│   │   │   │   ├── post.controller.ts
+│   │   │   │   └── post.module.ts
+│   │   │   └── user
+│   │   │       ├── user.controller.ts
+│   │   │       └── user.module.ts
+│   │   └── tsconfig.app.json
+│   ├── post
+│   │   ├── Dockerfile
+│   │   ├── src
+│   │   │   ├── main.ts
+│   │   │   ├── post.controller.ts
+│   │   │   ├── post.module.ts
+│   │   │   └── post.service.ts
+│   │   └── tsconfig.app.json
+│   └── user
+│       ├── Dockerfile
+│       ├── src
+│       │   ├── main.ts
+│       │   ├── user.controller.ts
+│       │   ├── user.module.ts
+│       │   └── user.service.ts
+│       └── tsconfig.app.json
+├── docker-compose.yml
+├── environment.d.ts
+├── libs
+│   ├── src
+│   │   ├── constants
+│   │   │   ├── patterns
+│   │   │   │   ├── post.ts
+│   │   │   │   └── user.ts
+│   │   │   └── services.ts
+│   │   ├── dto
+│   │   │   ├── entity.dto.ts
+│   │   │   ├── post
+│   │   │   │   ├── create.dto.ts
+│   │   │   │   ├── delete.dto.ts
+│   │   │   │   ├── post.dto.ts
+│   │   │   │   └── update.dto.ts
+│   │   │   └── user
+│   │   │       ├── create.dto.ts
+│   │   │       ├── delete.dto.ts
+│   │   │       ├── update.dto.ts
+│   │   │       └── user.dto.ts
+│   │   ├── filters
+│   │   │   └── exception-up.filter.ts
+│   │   ├── modules
+│   │   │   └── database
+│   │   │       ├── prisma.module.ts
+│   │   │       └── prisma.service.ts
+│   │   └── services
+│   │       └── micro
+│   │           └── service.ts
+│   └── tsconfig.lib.json
+├── migration.sh
+├── nest-cli.json
+├── nestjs-monorepo.postman_collection.json
+├── package-lock.json
+├── package.json
+├── prisma
+│   ├── migrations
+│   │   ├── 20241121165743_init
+│   │   │   └── migration.sql
+│   │   ├── 20241121171613_adding_dates_fields
+│   │   │   └── migration.sql
+│   │   ├── 20241121182847_adding_cascade
+│   │   │   └── migration.sql
+│   │   ├── 20241122112740_uniq_name
+│   │   │   └── migration.sql
+│   │   └── migration_lock.toml
+│   └── schema.prisma
+├── tsconfig.build.json
+└── tsconfig.json
+
+```
+
+## Node version
+
+- node - 20.16.0
+- npm - 10.8.1
+
