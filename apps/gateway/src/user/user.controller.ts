@@ -24,7 +24,7 @@ import { DeleteUserDto } from '@app/libs/dto/user/delete.dto';
 @Controller('users')
 export class UserController {
   constructor(
-    @Inject(SERVICE_NAMES.USER) private readonly userServices: ClientProxy,
+    @Inject(SERVICE_NAMES.USER) private readonly userService: ClientProxy,
   ) {}
 
   /**
@@ -34,7 +34,7 @@ export class UserController {
   @Get('list')
   async getList(): Promise<UserDto[]> {
     return await firstValueFrom(
-      this.userServices.send<UserDto[]>(USER_PATTERNS.GET_USERS, {}).pipe(
+      this.userService.send<UserDto[]>(USER_PATTERNS.GET_USERS, {}).pipe(
         catchError((error: Error) => {
           throw new InternalServerErrorException(error);
         }),
@@ -49,7 +49,7 @@ export class UserController {
   @Get('view/:id')
   async getView(@Param() { id }: { id: string }): Promise<UserDto> {
     return await firstValueFrom(
-      this.userServices
+      this.userService
         .send<
           UserDto,
           EntityDto
@@ -69,7 +69,7 @@ export class UserController {
   @Post('create')
   async createEntity(@Body() data: CreateUserDto): Promise<UserDto> {
     return await firstValueFrom(
-      this.userServices.send<UserDto>(USER_PATTERNS.CREATE_USER, data).pipe(
+      this.userService.send<UserDto>(USER_PATTERNS.CREATE_USER, data).pipe(
         catchError((error) => {
           throw new InternalServerErrorException(error);
         }),
@@ -84,7 +84,7 @@ export class UserController {
   @Patch('update')
   async updateEntity(@Body() data: UpdateUserDto): Promise<UserDto> {
     return await firstValueFrom(
-      this.userServices.send<UserDto>(USER_PATTERNS.UPDATE_USER, data).pipe(
+      this.userService.send<UserDto>(USER_PATTERNS.UPDATE_USER, data).pipe(
         catchError((error) => {
           throw new InternalServerErrorException(error);
         }),
@@ -99,7 +99,7 @@ export class UserController {
   @Delete('delete')
   async deleteEntity(@Body() data: DeleteUserDto): Promise<UserDto> {
     return await firstValueFrom(
-      this.userServices.send<UserDto>(USER_PATTERNS.DELETE_USER, data).pipe(
+      this.userService.send<UserDto>(USER_PATTERNS.DELETE_USER, data).pipe(
         catchError((error) => {
           throw new InternalServerErrorException(error);
         }),

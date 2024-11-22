@@ -1,4 +1,5 @@
 services:
+  #Gateway api
   gateway:
     build:
       context: .
@@ -14,6 +15,21 @@ services:
     ports:
       - '3000:3000'
 
+  #Post service
+  post:
+    build:
+      context: .
+      dockerfile: ./apps/post/Dockerfile
+      target: production
+    profiles: [ 'prod' ]
+    restart: unless-stopped
+    env_file:
+      - ./.env.production
+    depends_on:
+      migration:
+        condition: service_completed_successfully
+
+  #User service
   user:
     build:
       context: .
@@ -27,6 +43,7 @@ services:
       migration:
         condition: service_completed_successfully
 
+  #Migration prisma
   migration:
     build:
       context: .

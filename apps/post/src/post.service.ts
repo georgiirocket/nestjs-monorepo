@@ -1,13 +1,15 @@
 import { PrismaService } from '@app/libs/modules/database/prisma.service';
-import { PostDto } from './post.dto';
-import { CreatePostDto } from './create.dto';
-import { UpdatePostDto } from './update.dto';
-import { DeletePostDto } from './delete.dto';
+import { PostDto } from '@app/libs/dto/post/post.dto';
+import { CreatePostDto } from '@app/libs/dto/post/create.dto';
+import { UpdatePostDto } from '@app/libs/dto/post/update.dto';
+import { DeletePostDto } from '@app/libs/dto/post/delete.dto';
+import { Injectable } from '@nestjs/common';
 
 /**
- * Repository
+ * Service
  */
-export class PostRepository {
+@Injectable()
+export class PostService {
   constructor(private readonly prismaService: PrismaService) {}
 
   /**

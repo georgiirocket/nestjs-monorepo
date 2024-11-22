@@ -15,7 +15,7 @@ async function bootstrap() {
     .setTitle('Nestjs monorepo')
     .setDescription('Description for API')
     .setVersion('1.0')
-    .addTag('gateway')
+    .addTag('Gateway')
     .build();
 
   app.useGlobalPipes(new ValidationPipe());
