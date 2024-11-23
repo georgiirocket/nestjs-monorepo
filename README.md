@@ -65,6 +65,8 @@ If you want to test endpoints. You can import this file in Postman
 
 ## Structure
 
+Services can communicate between each other
+
 ```mermaid
   flowchart TD
     G[NestJS Gateway]
@@ -79,7 +81,6 @@ If you want to test endpoints. You can import this file in Postman
     G --> s2
     s1 --> D
     s2 --> D
-    s1 <--> s2
 ```
 
 ```
