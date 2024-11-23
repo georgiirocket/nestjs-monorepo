@@ -65,6 +65,23 @@ If you want to test endpoints. You can import this file in Postman
 
 ## Structure
 
+```mermaid
+  flowchart TD
+    G[NestJS Gateway]
+    D[Database]
+
+    subgraph Services
+        s1[User service]
+        s2[Post service]
+    end
+
+    G --> s1
+    G --> s2
+    s1 --> D
+    s2 --> D
+    s1 <--> s2
+```
+
 ```
 .
 ├── Dockerfile
@@ -155,4 +172,5 @@ If you want to test endpoints. You can import this file in Postman
 
 - node - 20.16.0
 - npm - 10.8.1
+
 
