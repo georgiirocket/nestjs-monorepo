@@ -50,7 +50,7 @@ export class PostService {
    * Delete entity
    * @param data
    */
-  async deleteUser(data: DeletePostDto): Promise<PostDto> {
+  async deleteEntity(data: DeletePostDto): Promise<PostDto> {
     return this.prismaService.post.delete({ where: data });
   }
 }

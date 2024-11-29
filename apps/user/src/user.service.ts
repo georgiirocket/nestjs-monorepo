@@ -50,15 +50,15 @@ export class UserService {
    * Delete entity
    * @param data
    */
-  async deleteUser(data: DeleteUserDto): Promise<UserDto> {
+  async deleteEntity(data: DeleteUserDto): Promise<UserDto> {
     return this.prismaService.user.delete({ where: data });
   }
 
   /**
-   * Check exist user
+   * Check exist entity
    * @param userName
    */
-  async checkExistUser(userName: string): Promise<UserDto | null> {
+  async checkExistEntity(userName: string): Promise<UserDto | null> {
     return this.prismaService.user.findUnique({ where: { name: userName } });
   }
 }

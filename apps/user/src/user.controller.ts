@@ -42,7 +42,7 @@ export class UserController {
    */
   @MessagePattern(USER_PATTERNS.CREATE_USER)
   async createEntity(data: CreateUserDto): Promise<UserDto> {
-    const existUser = await this.userService.checkExistUser(data.name);
+    const existUser = await this.userService.checkExistEntity(data.name);
 
     if (existUser) {
       throw new Error('Choose another user');
@@ -57,7 +57,7 @@ export class UserController {
    */
   @MessagePattern(USER_PATTERNS.UPDATE_USER)
   async updateEntity(data: UpdateUserDto): Promise<UserDto> {
-    const existUser = await this.userService.checkExistUser(data.name);
+    const existUser = await this.userService.checkExistEntity(data.name);
 
     if (existUser) {
       throw new Error('Choose another user');
@@ -72,6 +72,6 @@ export class UserController {
    */
   @MessagePattern(USER_PATTERNS.DELETE_USER)
   async deleteEntity(data: DeleteUserDto): Promise<UserDto> {
-    return this.userService.deleteUser(data);
+    return this.userService.deleteEntity(data);
   }
 }

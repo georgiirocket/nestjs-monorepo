@@ -82,6 +82,6 @@ export class PostController {
    */
   @MessagePattern(POST_PATTERNS.DELETE_POST)
   async deleteEntity(data: DeletePostDto): Promise<PostDto> {
-    return this.postService.deleteUser(data);
+    return this.postService.deleteEntity(data);
   }
 }
